@@ -1,0 +1,294 @@
+C++/C字符串基础
+一、数据类型
+数值：int double .......
+字符：char 
+字符常量：'a','b','?','+'......
+转义字符：
+'\a':响铃
+'\n':换行
+'\r':回车
+'\b':退格
+'\\':\
+'\'':'
+'\"':"
+'\0':空字符(NUL) 字符串的存储结束标记！！！
+......
+
+字符变量：
+char a;
+char b='+';//初始化+
+
+例如1：输入任意的两个整数，两个数字之间用运算符（仅限于+ - * /）隔开，计算对应的结果！
+
+输入：13+23输出：36
+输入：23*27输出:621
+输入：8/5输出：1.6
+输入：8-3输出：5
+
+例如2：
+题目描述
+
+小明上中学了，为了训练自己的整数运算能力，他找了一张练习卷，上面都是包含两个整数的算式，两个整数之间只会是加号、减号或乘号。
+题目要求尽快写出各算式计算结果的最小值。
+
+你能编程解决小明的问题吗？
+
+输入格式
+第一行是算式个数n，下面n行每行都是一个算式，每个算式均为仅包含两个整数的加式或减式或乘式，
+算式中没有空格且运算数和运算结果均在int类型的范围内。
+
+对于80%的数据，n<10，
+对于100%的数据，n<100
+且算式仅包含3个字符
+
+输出格式
+所有算式计算结果的最小值。
+
+输入样例 
+4
+1+2
+3-4
+5*6
+7-9
+输出样例
+-2
+
+二、ASCII码：
+ASCII:American Standard Code for Information Interchange.
+美国信息交换标准代码是:基于拉丁字母的一套电脑编码系统，主要用于显示现代英语和其他西欧语言。
+ASCII:0~255共256个，常见字符的ASCII码：
+'A':65   'Z':90
+'a':97   'z':122
+'0':48   '9':57
+' ':32
+'\0':0
+回车：13
+......
+1.如何测试某个字符的ASCII码：
+    char a;
+    int b;
+    cin>>a;
+    b=a;
+    cout<<b<<endl;
+
+2.如何测试某个ASCII码的字符：
+
+   int a;
+    char b;
+    cin>>a;
+    b=a;
+    cout<<b<<endl;
+
+思考:字符之间是否可以直接比较大小？？？
+    'A'<'a'
+大写：c>='A' and c<='Z'
+小写：c>='a' and c<='z'
+数字：c>='0' and c<='9'
+提示：没必要转为数值再比较！！！
+
+
+三、字符数组
+char a[101];
+char b[5]={'a','b','c','d','e'};
+例如3:输入一个整数n(n<=10000),再输入n个字符以空格隔开。将它们从小到大排序。
+输入：
+10
+h e l l o w o r l d 
+输出：
+d e h l l l o o r w
+//全局  '\0'
+char a[10001];
+
+int i,j,n;
+cin>>n;
+for(i=0;i<n;i++)cin>>a[i];
+
+for(i=0;i<n-1;i++)
+   for(j=i+1;j<n;j++)
+      if (a[i]>a[j])
+          swap(a[i],a[j]);
+
+for(i=0;i<n;i++)
+    cout<<a[i]<<" ";
+
+
+
+四、字符串
+定义：由一个或者多个字符构成的串！
+例如：
+
+"a","abc","110102200911119306X","150404198002035810".......
+
+特征：用""而不是''  
+
+
+存储：在C中字符串以字符数组来存储，以\0作为存储结束标记！！！
+      （在C中无字符串变量）
+例如：存储"heqingtian" 共10个字符
+char a[11];//可以用的空间：a[0]~a[10]，至少定义为11，因为\0占用空间
+
+字符串初始化：
+char a[11]="heqingtian";
+char b[5]={'l','i','y','i','\0'};
+
+以下三者的区别和联系？：
+0,'0',"0"
+数字，字符，字符串
+
+
+输入：
+1.无空格的数据
+cin>>a;
+2.有空格的数据
+cin.getline(a,maxcount,endflag)
+例如：
+cin.getline(a,1001,'\n');
+
+\n可以缺省！
+
+输出：
+cout<<a;
+
+
+例1：输入你的名字，输出你的名字！
+输入：xumingqi
+输出：xumingqi
+
+例2：
+输入一个字符串（假设长度不超过1000个字符），统计该字符串中字符的实际个数。
+输入：
+linzonghan
+输出：
+10
+
+#include <iostream>
+using namespace std;
+char a[1001];
+int main()
+{
+    int i,counter=0;
+    cin.getline(a,1001);
+    //字符串未结束 
+    
+    for(i=0;a[i]!='\0';i++)
+    {
+        counter++;
+    } 
+    cout<<counter<<endl;
+    system("pause");
+    return 0;
+}
+
+或：
+cin>>a;
+la=strlen(a);
+cout<<la<<endl;
+
+例3：
+输入一个字符串（假设长度不超过1000个字符），统计该字符串中大写字符、小写字符、数字字符以及其它字符的个数。
+输入：
+Hello abc123??!!!
+
+输出：
+1 7 3 6
+
+#include <iostream>
+using namespace std;
+char a[1001];
+int main()
+{
+    int i,counter=0;
+    cin.getline(a,1001);
+    //字符串未结束 
+    int d,x,s,q;
+    d=x=s=q=0;
+    for(i=0;a[i]!='\0';i++)
+    {
+       if(a[i]>='A' and a[i]<='Z')
+          d++;
+       else if(a[i]>='a' and a[i]<='z')
+          x++;
+       else if(a[i]>='0' and a[i]<='9')
+          s++;
+       else
+          q++;
+    } 
+    cout<<d<<" "<<x<<" "<<s<<" "<<q<<endl;
+    system("pause");
+    return 0;
+}
+
+
+例4：完善程序，实现字符串复制
+char a[10001],b[10001];
+    cin.getline(a,10001);
+    int i;
+    for(i=0;a[i]!='\0';i++)
+    {
+       b[i]=a[i];
+    }
+    b[i]='\0';
+    cout<<b<<endl;
+
+五、字符串常见函数
+字符串函数:
+1.求长度strlen(a)
+2.字符串赋值strcpy(b,a);//将a赋值到b
+3.字符串比较大小strcmp(a,b)
+  0:a串等于b串
+  1：a串大于b串
+  -1:a串小于b串
+<
+  字符串比较原理：字典序
+  "zhangyicong">"zhangenning"
+  (因为y>e)
+  "lijunchi">"lijun"
+  (因为c>'\0'
+>
+  if(strcmp(a,b)==0)
+     cout<<"=";  
+  elseif(strcmp(a,b)==1)
+     cout<<">";
+  else
+     cout<<"<";
+4.字符串连接函数strcat(a,b);
+  例如："liyushuo""zhanganning"
+  strcat("liyushuo","zhanganning");
+  注意：a足够大！
+
+
+......
+字符串中常见的代码：
+char a[100001];
+
+//cin.getline(a,100001);
+cin>>a;
+
+for(i=0;a[i]!='\0';i++)
+{
+   //根据实际问题处理
+}
+
+或
+char a[100001];
+int la;
+//cin.getline(a,100001);
+cin>>a;
+la=strlen(a);
+for(i=0;i<la;i++)
+{
+   //根据实际问题处理
+}
+
+
+
+
+关于C++中string 的用法，再我们做完大量题目再讲解！
+
+
+
+
+
+
+
+
